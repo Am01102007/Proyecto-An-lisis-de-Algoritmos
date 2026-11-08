@@ -1,0 +1,39 @@
+{
+  "fecha_descarga": "2026-11-07",
+  "osmnx": "2.1.1",
+  "red_descargada": {
+    "nodos": 8807,
+    "aristas": 20153
+  },
+  "pesos": {
+    "aristas": 20153,
+    "con_maxspeed": 1307,
+    "imputadas": 18846
+  },
+  "componente": {
+    "nodos": 8791,
+    "aristas": 20132
+  },
+  "memoria_red_descargada": {
+    "matriz_float64_mb": 591.760627746582,
+    "matriz_1byte_mb": 73.97007846832275,
+    "listas_mb": 0.37470245361328125
+  },
+  "memoria_componente": {
+    "matriz_float64_mb": 589.612434387207,
+    "matriz_1byte_mb": 73.70155429840088,
+    "listas_mb": 0.37425994873046875
+  },
+  "lugares_a_mas_de_500m": [
+    {
+      "id": "L15",
+      "nombre": "Valle de Cocora",
+      "distancia_m": 1045.6
+    },
+    {
+      "id": "L23",
+      "nombre": "Reserva Peñas Blancas",
+      "distancia_m": 740.5
+    }
+  ]
+}

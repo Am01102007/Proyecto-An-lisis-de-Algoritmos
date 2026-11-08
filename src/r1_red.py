@@ -5,13 +5,14 @@ Descarga las redes (necesita internet), así que es el único paso que tarda por
 """
 import csv
 import json
+import time
 from datetime import date
 
 import numpy as np
 import osmnx as ox
 from pyproj import Transformer
 
-from config import (CATALOGO, COMPONENTE, CRS_UTM, LUGAR, LUGARES_NODOS, PLAZA_BOLIVAR,
+from config import (CATALOGO, COMPONENTE, CRS_UTM, DATOS, LUGAR, LUGARES_NODOS, PLAZA_BOLIVAR,
                     RED_COMPLETA, RESULTADOS)
 from medicion import guardar_maquina, medir
 
@@ -26,6 +27,38 @@ VELOCIDAD_POR_TIPO = {
     "unclassified": 30, "residential": 30, "living_street": 20, "service": 20,
 }
 VELOCIDAD_RESPALDO = 30
+
+# Servidores de Overpass: si el principal está saturado, se prueba el espejo
+SERVIDORES_OVERPASS = ["https://overpass-api.de/api", "https://overpass.kumi.systems/api"]
+
+
+# ---------- Descarga con reintentos ----------
+
+def descargar(funcion, *args, **kwargs):
+    """Llama a una función de descarga de OSMnx; si Overpass está saturado, espera y reintenta.
+
+    Espera 30, 60, 120 y 240 s (espera exponencial) y alterna entre los servidores.
+    """
+    espera = 30
+    for intento in range(1, 6):
+        ox.settings.overpass_url = SERVIDORES_OVERPASS[(intento - 1) % len(SERVIDORES_OVERPASS)]
+        try:
+            return funcion(*args, **kwargs)
+        except Exception as e:   # errores de red o de Overpass (502, 504, 429, respuesta vacía...)
+            if intento == 5:
+                raise
+            print(f"    falló la descarga ({type(e).__name__}); reintento {intento}/4 en {espera} s...")
+            time.sleep(espera)
+            espera *= 2
+
+
+def red_guardada(ruta, funcion, *args, **kwargs):
+    """Si la red ya está guardada en datos/, la lee; si no, la descarga y la guarda."""
+    if ruta.exists():
+        return ox.load_graphml(ruta)
+    G = descargar(funcion, *args, **kwargs)
+    ox.save_graphml(G, ruta)
+    return G
 
 
 # ---------- 1. Representación ----------
@@ -64,9 +97,10 @@ def medir_componentes(G_departamento):
     """Tiempo de largest_component en redes de tamaño creciente (tabla del anexo)."""
     redes = []
     for r in RADIOS_KM:
-        print(f"  descargando radio de {r} km...")
+        print(f"  red de radio {r} km...")
         redes.append((f"Radio de {r} km",
-                      ox.graph_from_point(PLAZA_BOLIVAR, dist=r * 1000, network_type="drive")))
+                      red_guardada(DATOS / f"red_radio_{r}km.graphml", ox.graph_from_point,
+                                   PLAZA_BOLIVAR, dist=r * 1000, network_type="drive")))
     redes.append(("Departamento completo", G_departamento))
 
     filas = []
@@ -111,10 +145,13 @@ def guardar_csv(ruta, filas):
 
 def main():
     guardar_maquina()
-    print("Descargando la red del departamento...")
-    G = ox.graph_from_place(LUGAR, network_type="drive")
-    ox.save_graphml(G, RED_COMPLETA)
-    resumen = {"fecha_descarga": str(date.today()), "osmnx": ox.__version__,
+    print("Red del departamento (si ya está en datos/, no se descarga otra vez)...")
+    if not RED_COMPLETA.exists():
+        (RESULTADOS / "fecha_descarga.txt").write_text(str(date.today()))
+    G = red_guardada(RED_COMPLETA, ox.graph_from_place, LUGAR, network_type="drive")
+    archivo_fecha = RESULTADOS / "fecha_descarga.txt"
+    fecha = archivo_fecha.read_text() if archivo_fecha.exists() else str(date.today())
+    resumen = {"fecha_descarga": fecha, "osmnx": ox.__version__,
                "red_descargada": {"nodos": G.number_of_nodes(), "aristas": G.number_of_edges()}}
 
     print("Pesos...")

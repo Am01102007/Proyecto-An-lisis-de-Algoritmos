@@ -12,8 +12,8 @@ L10,Pijao (plaza principal),Pijao,cabecera,4.3343,-75.7046,,no
 L11,Quimbaya (plaza principal),Quimbaya,cabecera,4.6229,-75.7627,,no
 L12,Salento (plaza principal),Salento,cabecera,4.6371,-75.5704,,no
 L13,Parque Nacional del Café,Montenegro,atractivo,4.5404,-75.7706,360,no
-L14,PANACA,Quimbaya,atractivo,4.6320,-75.8020,300,no
-L15,Valle de Cocora,Salento,atractivo,4.6383,-75.4870,240,no
+L14,PANACA,Quimbaya,atractivo,4.607808,-75.818763,300,si
+L15,Valle de Cocora,Salento,atractivo,4.647431,-75.489722,240,si
 L16,Jardín Botánico del Quindío,Calarcá,atractivo,4.5235,-75.6470,150,no
 L17,Museo del Oro Quimbaya,Armenia,atractivo,4.5527,-75.6611,90,no
 L18,Recuca,Calarcá,atractivo,4.4540,-75.6860,180,no
@@ -21,18 +21,18 @@ L19,Mirador de Filandia,Filandia,atractivo,4.6729,-75.6603,60,no
 L20,Calle Real y mirador Alto de la Cruz,Salento,atractivo,4.6380,-75.5685,90,no
 L21,Parque de la Vida,Armenia,atractivo,4.5450,-75.6638,60,no
 L22,Parque Los Arrieros,Quimbaya,atractivo,4.5960,-75.7700,240,no
-L23,Reserva Peñas Blancas,Calarcá,atractivo,4.4960,-75.6170,180,no
-L24,Balsaje en el río La Vieja (Puerto Alejandría),Quimbaya,atractivo,4.6600,-75.8360,150,no
+L23,Reserva Peñas Blancas,Calarcá,atractivo,4.478376,-75.628729,180,si
+L24,Balsaje en el río La Vieja (Puerto Alejandría),Quimbaya,atractivo,4.623602,-75.851123,150,si
 L25,Colina Iluminada,Filandia,atractivo,4.6770,-75.6620,60,no
 L26,Reserva Barbas-Bremen,Filandia,atractivo,4.7000,-75.6500,180,no
 L27,Mirador de Buenavista,Buenavista,atractivo,4.3570,-75.7410,60,no
 L28,Hacienda Combia,Calarcá,finca,4.4980,-75.6620,,no
 L29,Hacienda San Alberto,Buenavista,finca,4.3650,-75.7440,,no
-L30,Finca El Ocaso,Salento,finca,4.6280,-75.5910,,no
-L31,Finca Don Elías,Salento,finca,4.6310,-75.5550,,no
+L30,Finca El Ocaso,Salento,finca,4.623885,-75.595270,,si
+L31,Finca Don Elías,Salento,finca,4.624412,-75.597257,,si
 L32,Hacienda Bambusa,Calarcá,finca,4.4920,-75.7220,,no
 L33,Finca Villa Nora,Quimbaya,finca,4.6050,-75.8000,,no
-L34,FINCA POR DEFINIR 1,Circasia,finca,4.6100,-75.6500,,no
+L34,Finca Hotel Nuevo Futuro,Circasia,finca,4.600549,-75.638593,,si
 L35,FINCA POR DEFINIR 2,Montenegro,finca,4.5550,-75.7300,,no
 L36,ACOPIO POR DEFINIR (Almacafé),Armenia,acopio,4.5450,-75.6980,,no
 L37,ACOPIO POR DEFINIR (Cooperativa de Caficultores),Armenia,acopio,4.5370,-75.6760,,no

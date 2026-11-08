@@ -1,0 +1,41 @@
+id,nombre,municipio,categoria,latitud,longitud,duracion_visita_min,verificado,nodo,distancia_nodo_m
+L01,Armenia (plaza de Bolívar),Armenia,cabecera,4.5339,-75.6811,,no,2759670520,24.9
+L02,Buenavista (plaza principal),Buenavista,cabecera,4.3597,-75.7392,,no,4799848951,23.1
+L03,Calarcá (plaza principal),Calarcá,cabecera,4.5296,-75.6435,,no,3003932840,26.2
+L04,Circasia (plaza principal),Circasia,cabecera,4.6187,-75.6358,,no,2099823290,41.0
+L05,Córdoba (plaza principal),Córdoba,cabecera,4.3917,-75.6878,,no,3192289589,30.1
+L06,Filandia (plaza principal),Filandia,cabecera,4.6740,-75.6585,,no,1332569097,47.0
+L07,Génova (plaza principal),Génova,cabecera,4.2069,-75.7900,,no,4466439788,4.6
+L08,La Tebaida (plaza principal),La Tebaida,cabecera,4.4523,-75.7880,,no,2179284257,40.7
+L09,Montenegro (plaza principal),Montenegro,cabecera,4.5662,-75.7510,,no,960392072,20.8
+L10,Pijao (plaza principal),Pijao,cabecera,4.3343,-75.7046,,no,2735374232,59.5
+L11,Quimbaya (plaza principal),Quimbaya,cabecera,4.6229,-75.7627,,no,3989083941,17.6
+L12,Salento (plaza principal),Salento,cabecera,4.6371,-75.5704,,no,338999580,29.4
+L13,Parque Nacional del Café,Montenegro,atractivo,4.5404,-75.7706,360,no,11276245850,182.9
+L14,PANACA,Quimbaya,atractivo,4.607808,-75.818763,300,si,7623861314,92.5
+L15,Valle de Cocora,Salento,atractivo,4.647431,-75.489722,240,si,1543526033,1045.6
+L16,Jardín Botánico del Quindío,Calarcá,atractivo,4.5235,-75.6470,150,no,9408868406,51.0
+L17,Museo del Oro Quimbaya,Armenia,atractivo,4.5527,-75.6611,90,no,672971678,149.9
+L18,Recuca,Calarcá,atractivo,4.4540,-75.6860,180,no,2399953187,491.5
+L19,Mirador de Filandia,Filandia,atractivo,4.6729,-75.6603,60,no,1332569083,11.1
+L20,Calle Real y mirador Alto de la Cruz,Salento,atractivo,4.6380,-75.5685,90,no,6965049667,43.2
+L21,Parque de la Vida,Armenia,atractivo,4.5450,-75.6638,60,no,3008266312,35.5
+L22,Parque Los Arrieros,Quimbaya,atractivo,4.5960,-75.7700,240,no,7629794231,273.0
+L23,Reserva Peñas Blancas,Calarcá,atractivo,4.478376,-75.628729,180,si,4612341644,740.5
+L24,Balsaje en el río La Vieja (Puerto Alejandría),Quimbaya,atractivo,4.623602,-75.851123,150,si,2679757332,6.6
+L25,Colina Iluminada,Filandia,atractivo,4.6770,-75.6620,60,no,2679763448,299.6
+L26,Reserva Barbas-Bremen,Filandia,atractivo,4.7000,-75.6500,180,no,1332439603,165.1
+L27,Mirador de Buenavista,Buenavista,atractivo,4.3570,-75.7410,60,no,4691459684,256.2
+L28,Hacienda Combia,Calarcá,finca,4.4980,-75.6620,,no,6382310387,405.1
+L29,Hacienda San Alberto,Buenavista,finca,4.3650,-75.7440,,no,4591256966,448.7
+L30,Finca El Ocaso,Salento,finca,4.623885,-75.595270,,si,2922930733,458.7
+L31,Finca Don Elías,Salento,finca,4.624412,-75.597257,,si,2923976294,414.2
+L32,Hacienda Bambusa,Calarcá,finca,4.4920,-75.7220,,no,7552740954,409.2
+L33,Finca Villa Nora,Quimbaya,finca,4.6050,-75.8000,,no,10151272510,377.4
+L34,Finca Hotel Nuevo Futuro,Circasia,finca,4.600549,-75.638593,,si,5237237434,254.6
+L35,FINCA POR DEFINIR 2,Montenegro,finca,4.5550,-75.7300,,no,5963524645,135.6
+L36,ACOPIO POR DEFINIR (Almacafé),Armenia,acopio,4.5450,-75.6980,,no,2957936009,184.3
+L37,ACOPIO POR DEFINIR (Cooperativa de Caficultores),Armenia,acopio,4.5370,-75.6760,,no,672915583,29.6
+L38,ACOPIO POR DEFINIR,Calarcá,acopio,4.5300,-75.6400,,no,3003932837,26.9
+L39,ACOPIO POR DEFINIR,Quimbaya,acopio,4.6240,-75.7600,,no,4354836058,33.6
+L40,ACOPIO POR DEFINIR,Pijao,acopio,4.3350,-75.7050,,no,4820628933,14.9
