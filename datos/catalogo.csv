@@ -1,41 +1,41 @@
 id,nombre,municipio,categoria,latitud,longitud,duracion_visita_min,verificado
-L01,Armenia (plaza de Bolívar),Armenia,cabecera,4.5339,-75.6811,,no
-L02,Buenavista (plaza principal),Buenavista,cabecera,4.3597,-75.7392,,no
-L03,Calarcá (plaza principal),Calarcá,cabecera,4.5296,-75.6435,,no
-L04,Circasia (plaza principal),Circasia,cabecera,4.6187,-75.6358,,no
-L05,Córdoba (plaza principal),Córdoba,cabecera,4.3917,-75.6878,,no
-L06,Filandia (plaza principal),Filandia,cabecera,4.6740,-75.6585,,no
-L07,Génova (plaza principal),Génova,cabecera,4.2069,-75.7900,,no
-L08,La Tebaida (plaza principal),La Tebaida,cabecera,4.4523,-75.7880,,no
-L09,Montenegro (plaza principal),Montenegro,cabecera,4.5662,-75.7510,,no
-L10,Pijao (plaza principal),Pijao,cabecera,4.3343,-75.7046,,no
-L11,Quimbaya (plaza principal),Quimbaya,cabecera,4.6229,-75.7627,,no
-L12,Salento (plaza principal),Salento,cabecera,4.6371,-75.5704,,no
-L13,Parque Nacional del Café,Montenegro,atractivo,4.5404,-75.7706,360,no
-L14,PANACA,Quimbaya,atractivo,4.607808,-75.818763,300,si
-L15,Valle de Cocora,Salento,atractivo,4.647431,-75.489722,240,si
-L16,Jardín Botánico del Quindío,Calarcá,atractivo,4.5235,-75.6470,150,no
-L17,Museo del Oro Quimbaya,Armenia,atractivo,4.5527,-75.6611,90,no
-L18,Recuca,Calarcá,atractivo,4.4540,-75.6860,180,no
-L19,Mirador de Filandia,Filandia,atractivo,4.6729,-75.6603,60,no
-L20,Calle Real y mirador Alto de la Cruz,Salento,atractivo,4.6380,-75.5685,90,no
-L21,Parque de la Vida,Armenia,atractivo,4.5450,-75.6638,60,no
-L22,Parque Los Arrieros,Quimbaya,atractivo,4.5960,-75.7700,240,no
-L23,Reserva Peñas Blancas,Calarcá,atractivo,4.478376,-75.628729,180,si
-L24,Balsaje en el río La Vieja (Puerto Alejandría),Quimbaya,atractivo,4.623602,-75.851123,150,si
-L25,Colina Iluminada,Filandia,atractivo,4.6770,-75.6620,60,no
-L26,Reserva Barbas-Bremen,Filandia,atractivo,4.7000,-75.6500,180,no
-L27,Mirador de Buenavista,Buenavista,atractivo,4.3570,-75.7410,60,no
-L28,Hacienda Combia,Calarcá,finca,4.4980,-75.6620,,no
-L29,Hacienda San Alberto,Buenavista,finca,4.3650,-75.7440,,no
-L30,Finca El Ocaso,Salento,finca,4.623885,-75.595270,,si
-L31,Finca Don Elías,Salento,finca,4.624412,-75.597257,,si
-L32,Hacienda Bambusa,Calarcá,finca,4.4920,-75.7220,,no
-L33,Finca Villa Nora,Quimbaya,finca,4.6050,-75.8000,,no
-L34,Finca Hotel Nuevo Futuro,Circasia,finca,4.600549,-75.638593,,si
-L35,FINCA POR DEFINIR 2,Montenegro,finca,4.5550,-75.7300,,no
-L36,ACOPIO POR DEFINIR (Almacafé),Armenia,acopio,4.5450,-75.6980,,no
-L37,ACOPIO POR DEFINIR (Cooperativa de Caficultores),Armenia,acopio,4.5370,-75.6760,,no
-L38,ACOPIO POR DEFINIR,Calarcá,acopio,4.5300,-75.6400,,no
-L39,ACOPIO POR DEFINIR,Quimbaya,acopio,4.6240,-75.7600,,no
-L40,ACOPIO POR DEFINIR,Pijao,acopio,4.3350,-75.7050,,no
+L01,Armenia (plaza de Bolívar),Armenia,cabecera,4.532066,-75.673104,,si
+L02,Buenavista (plaza principal),Buenavista,cabecera,4.359517,-75.738462,,si
+L03,Calarcá (plaza principal),Calarcá,cabecera,4.530542,-75.640670,,si
+L04,Circasia (plaza principal),Circasia,cabecera,4.620191,-75.635006,,si
+L05,Córdoba (plaza principal),Córdoba,cabecera,4.390456,-75.685639,,si
+L06,Filandia (plaza principal),Filandia,cabecera,4.674785,-75.658020,,si
+L07,Génova (plaza principal),Génova,cabecera,4.206584,-75.790563,,si
+L08,La Tebaida (plaza principal),La Tebaida,cabecera,4.453684,-75.789686,,si
+L09,Montenegro (plaza principal),Montenegro,cabecera,4.567243,-75.750523,,si
+L10,Pijao (plaza principal),Pijao,cabecera,4.334274,-75.703932,,si
+L11,Quimbaya (plaza principal),Quimbaya,cabecera,4.628560,-75.760364,,si
+L12,Salento (plaza principal),Salento,cabecera,4.637547,-75.569726,,si
+L13,Parque Nacional del Café,Montenegro,atractivo,4.540376,-75.770702,360,si
+L14,PANACA,Quimbaya,atractivo,4.608131,-75.818816,300,si
+L15,Valle de Cocora,Salento,atractivo,4.637915,-75.488984,240,si
+L16,Jardín Botánico del Quindío,Calarcá,atractivo,4.511836,-75.651015,150,si
+L17,Museo del Oro Quimbaya,Armenia,atractivo,4.571477,-75.647797,90,si
+L18,Recuca,Calarcá,atractivo,4.432733,-75.733235,180,si
+L19,Mirador de Filandia,Filandia,atractivo,4.668756,-75.665170,60,si
+L20,Calle Real y mirador Alto de la Cruz,Salento,atractivo,4.639958,-75.566324,90,si
+L21,Parque de la Vida,Armenia,atractivo,4.548320,-75.660400,60,si
+L22,Parque Los Arrieros,Quimbaya,atractivo,4.580228,-75.780839,240,si
+L23,Reserva Peñas Blancas,Calarcá,atractivo,4.484248,-75.641119,180,si
+L24,Balsaje en el río La Vieja (Puerto Alejandría),Quimbaya,atractivo,4.556961,-75.868795,150,si
+L25,Colina Iluminada,Filandia,atractivo,4.669061,-75.665601,60,si
+L26,Reserva Barbas-Bremen,Filandia,atractivo,4.731790,-75.577084,180,si
+L27,Mirador de Buenavista,Buenavista,atractivo,4.387266,-75.732177,60,si
+L28,Hacienda Combia,Calarcá,finca,4.491932,-75.686550,,si
+L29,Hacienda San Alberto,Buenavista,finca,4.352760,-75.748778,,si
+L30,Finca El Ocaso,Salento,finca,4.623896,-75.595195,,si
+L31,Finca Don Elías,Salento,finca,4.624412,-75.597429,,si
+L32,Hacienda Bambusa,Calarcá,finca,4.399367,-75.774723,,si
+L33,Finca Villa Nora,Quimbaya,finca,4.631144,-75.799225,,si
+L34,Finca Hotel Nuevo Futuro,Circasia,finca,4.599276,-75.638258,,si
+L35,Hotel Campestre Las Camelias,Montenegro,finca,4.522815,-75.785228,,si
+L36,La Trilladora Co,Armenia,acopio,4.536126,-75.663325,,si
+L37,Fundación de Recicladores Hapro Bitat,Armenia,acopio,4.531502,-75.678947,,si
+L38,RECIICLAR SAS ESP,Armenia,acopio,4.537787,-75.674628,,si
+L39,Cooperativa de Caficultores del Quindío - Compra de Café Calarcá,Calarcá,acopio,4.529096,-75.643694,,si
+L40,Banco de Alimentos,Armenia,acopio,4.531756,-75.672838,,si

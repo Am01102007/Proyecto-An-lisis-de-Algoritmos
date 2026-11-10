@@ -5,3 +5,5 @@ cache/
 # Redes descargadas sin procesar (pesan mucho; se regeneran con src/r1_red.py)
 datos/red_quindio.graphml
 datos/red_radio_*.graphml
+.idea/
+.benchmarks/

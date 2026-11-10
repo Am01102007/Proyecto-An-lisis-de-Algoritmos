@@ -16,7 +16,7 @@ LUGARES_NODOS = DATOS / "lugares_nodos.csv"         # cada lugar con su nodo má
 MATRIZ = RESULTADOS / "matriz_tiempos.csv"
 
 # Plaza de Bolívar de Armenia: centro de las redes de radio creciente y punto de partida del R4
-PLAZA_BOLIVAR = (4.5339, -75.6811)
+PLAZA_BOLIVAR = (4.532066, -75.673104)   # misma coordenada que L01 en el catálogo
 ID_ARMENIA = "L01"
 
 CRS_UTM = "EPSG:32618"   # UTM zona 18N, en metros

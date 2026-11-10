@@ -5,8 +5,8 @@ Análisis de Algoritmos, 2026-2
 
 > **Cómo usar esta plantilla.** La teoría (complejidades, recurrencias y argumentos de correctitud) ya está escrita. Lo que está entre corchetes **[LLENAR: …]** se completa con los números de `resultados/tablas.md` después de correr los scripts. Antes de entregar, cada una reescribe sus secciones con sus propias palabras.
 
-**Máquina de las mediciones:** [LLENAR: procesador, RAM, sistema operativo y versión de Python, de `resultados/maquina.json`]. Todas las mediciones se hicieron en esa misma máquina.
-**Fecha de descarga de la red:** [LLENAR: `fecha_descarga` de `resultados/r1_resumen.json`]. Versión de OSMnx: [LLENAR].
+**Máquina de las mediciones:** portátil Lenovo con procesador Intel (Family 6 Model 183; [LLENAR: nombre comercial, en Configuración → Sistema → Acerca de]), 16 hilos, 31,7 GB de RAM, Windows 11 y Python 3.14.6. Todas las mediciones se hicieron en esa misma máquina.
+**Fecha de descarga de la red:** 7 de noviembre de 2026. Versión de OSMnx: 2.1.1.
 
 ---
 
@@ -42,13 +42,15 @@ Con V nodos y E aristas:
 - Cabecera de lista: un puntero de 8 bytes.
 - Entrada de lista: el vecino (entero de 8 bytes) más el peso (`float64` de 8 bytes), 16 bytes.
 
+Red descargada: V = 8 807 nodos y E = 20 153 aristas.
+
 | Representación | Fórmula | MB |
 |---|---|---|
-| Matriz (8 B por celda) | 8·V² / 1024² | [LLENAR] |
-| Matriz (1 B por celda) | V² / 1024² | [LLENAR] |
-| Listas de adyacencia | (8·V + 16·E) / 1024² | [LLENAR] |
+| Matriz (8 B por celda) | 8·V² / 1024² | 591,8 |
+| Matriz (1 B por celda) | V² / 1024² | 74,0 |
+| Listas de adyacencia | (8·V + 16·E) / 1024² | 0,37 |
 
-**Elección: listas de adyacencia.** La red vial es dispersa: cada intersección se conecta con 2 a 4 vecinos, así que E ≈ [LLENAR: E/V] · V es muchísimo menor que V². La matriz necesitaría [LLENAR] MB, casi todos de celdas vacías, mientras que las listas ocupan [LLENAR] MB. Además, Dijkstra solo recorre los vecinos de cada nodo. Con listas, recorrer todos los vecinos de todos los nodos cuesta O(V + E); con matriz cuesta O(V²).
+**Elección: listas de adyacencia.** La red vial es dispersa: cada intersección se conecta con 2 a 4 vecinos, así que E ≈ 2,3 · V es muchísimo menor que V². De las V² ≈ 77,6 millones de celdas de la matriz, solo 20 153 (el 0,03 %) tendrían una vía. La matriz necesitaría 591,8 MB, casi todos de celdas vacías, mientras que las listas ocupan 0,37 MB, unas 1 600 veces menos. Además, Dijkstra solo recorre los vecinos de cada nodo. Con listas, recorrer todos los vecinos de todos los nodos cuesta O(V + E); con matriz cuesta O(V²).
 
 ### 2.2 Pesos
 
@@ -59,14 +61,14 @@ Con V nodos y E aristas:
   - Si el tipo no está en la tabla, se usan 30 km/h.
 - `travel_time` (s) = `length` / (`speed_kph` / 3,6), con `ox.routing.add_edge_travel_times`.
 
-De las [LLENAR] aristas, [LLENAR] tenían `maxspeed` y [LLENAR] recibieron una velocidad imputada (ver `pesos` en `r1_resumen.json`). El tiempo es una estimación del modelo: no considera tráfico, pendientes ni semáforos.
+De las 20 153 aristas, solo 1 307 (6,5 %) tenían `maxspeed`, y las otras 18 846 (93,5 %) recibieron una velocidad imputada según su tipo de vía (ver `pesos` en `r1_resumen.json`). Por eso la tabla de velocidades por tipo de vía determina casi todos los tiempos del modelo. El tiempo es una estimación del modelo: no considera tráfico, pendientes ni semáforos.
 
 ### 2.3 Componente fuertemente conexa
 
 **Algoritmo interno.**
 - `ox.truncate.largest_component(G, strongly=True)` primero llama `nx.is_strongly_connected(G)`. Si la red no es fuertemente conexa, obtiene las componentes con `nx.strongly_connected_components(G)`, se queda con la de más nodos y copia ese subgrafo.
 - Según la documentación de NetworkX, `strongly_connected_components` es una versión **no recursiva del algoritmo de Tarjan, con las modificaciones de Nuutila**.
-  - Fuentes: código fuente de `osmnx/truncate.py` (OSMnx [LLENAR versión]); documentación de `networkx.algorithms.components.strongly_connected_components`; R. Tarjan, «Depth-first search and linear graph algorithms», *SIAM J. Computing* 1(2), 1972; E. Nuutila y E. Soisalon-Soininen, «On finding the strongly connected components in a directed graph», *Information Processing Letters* 49, 1994.
+  - Fuentes: código fuente de `osmnx/truncate.py` (OSMnx 2.1.1); documentación de `networkx.algorithms.components.strongly_connected_components`; R. Tarjan, «Depth-first search and linear graph algorithms», *SIAM J. Computing* 1(2), 1972; E. Nuutila y E. Soisalon-Soininen, «On finding the strongly connected components in a directed graph», *Information Processing Letters* 49, 1994.
 
 **Cómo funciona.**
 - Hace un recorrido en profundidad y le asigna a cada nodo un número de descubrimiento y un valor `lowlink`, que es el menor número de descubrimiento que puede alcanzar desde su subárbol.
@@ -81,11 +83,27 @@ De las [LLENAR] aristas, [LLENAR] tenían `maxspeed` y [LLENAR] recibieron una v
 
 | Red | V | E | V+E | Tiempo (ms) |
 |---|---|---|---|---|
-| [LLENAR desde tablas.md: radios de 2, 5, 10 y 20 km y departamento completo] |||||
+| Radio de 2 km | 1 945 | 4 434 | 6 379 | 34,3 |
+| Radio de 5 km | 4 294 | 9 682 | 13 976 | 79,1 |
+| Radio de 10 km | 6 156 | 13 900 | 20 056 | 110,9 |
+| Radio de 20 km | 8 800 | 20 102 | 28 902 | 159,6 |
+| Departamento completo | 8 807 | 20 153 | 28 960 | 159,3 |
 
 ![Componente: tiempo frente a V+E](../graficas/r1_componente.png)
 
-**Discusión.** [LLENAR. Si la complejidad es O(V + E), el cociente tiempo / (V + E) debe ser parecido en todas las redes y la gráfica debe verse casi como una recta. Calcular ese cociente para las 5 redes y decir si se mantiene. En las redes pequeñas pesan más los costos fijos de Python (crear objetos, llamar funciones), por eso el cociente puede ser mayor.]
+**Discusión.** Si la complejidad es O(V + E), el tiempo dividido entre V + E debe ser casi constante. Con los datos medidos:
+
+| Red | Tiempo / (V + E) |
+|---|---|
+| Radio de 2 km | 5,38 µs |
+| Radio de 5 km | 5,66 µs |
+| Radio de 10 km | 5,53 µs |
+| Radio de 20 km | 5,52 µs |
+| Departamento completo | 5,50 µs |
+
+- El cociente se mantiene entre 5,4 y 5,7 µs por elemento, aunque V + E crece 4,5 veces del radio de 2 km al departamento. La gráfica es prácticamente una recta, lo que coincide con O(V + E).
+- La pequeña variación se explica por el ruido de la medición y el manejo de memoria de Python. No sigue ninguna tendencia que sugiera un crecimiento mayor, como V log V o V².
+- La red de 20 km es casi igual al departamento completo (28 902 contra 28 960): el cuadrado de 40 × 40 km alrededor de Armenia cubre casi toda la red vial del Quindío. Por eso sus tiempos son prácticamente iguales.
 
 **Por qué trabajar solo con la componente.** En la componente fuertemente conexa, desde cualquier nodo se puede llegar a cualquier otro respetando el sentido de las vías. Así:
 - Dijkstra siempre encuentra una ruta entre dos lugares.
@@ -98,8 +116,8 @@ Los nodos que quedan fuera, como calles sin salida de un solo sentido o fragment
 
 - Las coordenadas de los lugares y de los nodos se convierten a UTM zona 18N (EPSG:32618) con `pyproj`.
 - Cada lugar se asocia al nodo con menor distancia euclidiana, por recorrido lineal: O(V) por lugar y O(L·V) en total, con L lugares.
-- Lugares a más de 500 m de su nodo: [LLENAR desde `lugares_a_mas_de_500m` en `r1_resumen.json`].
-- Cómo se trataron: [LLENAR. Por ejemplo, se revisó la coordenada en el mapa. Si era correcta y el lugar está en una vía destapada que no hace parte de la red `drive`, se mantiene el nodo más cercano y se aclara que el último tramo no está modelado.]
+- Lugares a más de 500 m de su nodo: en la primera ejecución fueron 7 (PANACA, Valle de Cocora, Reserva Peñas Blancas, el balsaje del río La Vieja y tres fincas). Se revisaron en Google Maps y se corrigieron sus coordenadas, ubicándolas en la entrada o el parqueadero. Quedaron 2: Valle de Cocora (1 045,6 m) y Reserva Peñas Blancas (740,5 m). [CONFIRMAR después de cerrar el catálogo]
+- Cómo se trataron: en los dos casos el nodo más cercano es una vía rural (`unclassified`) donde termina la carretera, y el resto del recorrido hasta el atractivo es un sendero peatonal que no hace parte de la red `drive`. Se mantiene ese nodo como origen y destino de las rutas, y se aclara que el último tramo, a pie, no está modelado. [CONFIRMAR]
 
 ### 2.5 Grafo procesado
 
@@ -107,8 +125,10 @@ La componente con sus pesos se guarda en `datos/componente.graphml` y las asocia
 
 | Red | Nodos | Aristas |
 |---|---|---|
-| Red descargada | [LLENAR] | [LLENAR] |
-| Componente fuertemente conexa | [LLENAR] | [LLENAR] |
+| Red descargada | 8 807 | 20 153 |
+| Componente fuertemente conexa | 8 791 | 20 132 |
+
+Al filtrar la componente se pierden solo 16 nodos y 21 aristas (0,2 %): calles de un solo sentido sin salida o tramos en el borde del departamento.
 
 ---
 

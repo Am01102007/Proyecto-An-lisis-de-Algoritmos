@@ -99,7 +99,8 @@ def medir_componentes(G_departamento):
     for r in RADIOS_KM:
         print(f"  red de radio {r} km...")
         redes.append((f"Radio de {r} km",
-                      red_guardada(DATOS / f"red_radio_{r}km.graphml", ox.graph_from_point,
+                      red_guardada(DATOS / f"red_radio_{r}km_{PLAZA_BOLIVAR[0]}_{PLAZA_BOLIVAR[1]}.graphml",
+                                   ox.graph_from_point,
                                    PLAZA_BOLIVAR, dist=r * 1000, network_type="drive")))
     redes.append(("Departamento completo", G_departamento))
 
