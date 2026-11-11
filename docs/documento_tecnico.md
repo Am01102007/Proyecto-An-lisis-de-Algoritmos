@@ -1,9 +1,8 @@
 # Rutas del Paisaje Cultural Cafetero: documento técnico
 
-Helen Xiomara Giraldo Libreros· Valentina Porras Salazar · Maryam Hernández Giraldo
+Helen Xiomara Giraldo Libreros · Valentina Porras Salazar · Maryam Hernández Giraldo
 Análisis de Algoritmos, 2026-2
 
-> **Cómo usar esta plantilla.** La teoría (complejidades, recurrencias y argumentos de correctitud) ya está escrita. Lo que está entre corchetes **[LLENAR: …]** se completa con los números de `resultados/tablas.md` después de correr los scripts. Antes de entregar, cada una reescribe sus secciones con sus propias palabras.
 
 **Máquina de las mediciones:** portátil Lenovo con procesador Intel Core i5-13450HX de 13.ª generación, 16 hilos, 31,7 GB de RAM, Windows 11 y Python 3.14.6. Todas las mediciones se hicieron en esa misma máquina.
 **Fecha de descarga de la red:** 7 de noviembre de 2026. Versión de OSMnx: 2.1.1.
@@ -374,7 +373,7 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 - Partida: Armenia (plaza de Bolívar). Atractivos elegidos (7): Valle de Cocora, Jardín Botánico del Quindío, Museo del Oro Quimbaya, Mirador de Filandia, Calle Real y mirador Alto de la Cruz, Parque de la Vida y Mirador Encanto Filandia. Se ordenan con Held-Karp.
 - Duración = desplazamientos (matriz del R2) + visitas (columna `duracion_visita_min` del catálogo).
-- Criterio de las duraciones: [LLENAR fuente o criterio. Por ejemplo, el tiempo que sugiere la página oficial del parque, o 60 min para miradores, 90 min para museos y 4 a 6 h para parques temáticos].
+- **Criterio de las duraciones.** Son estimaciones de planeación definidas por el grupo según el tipo y el alcance esperado de cada visita; no son tiempos oficiales. Se asignaron 60 min a miradores y parques urbanos, 90 min a museos y recorridos urbanos, 150 min al Jardín Botánico y a actividades de río, entre 180 y 240 min a reservas naturales y actividades rurales, y entre 300 y 360 min a parques temáticos. Estos valores se registran en `datos/catalogo.csv` y permiten comparar la jornada bajo un criterio común.
 - Si no cabe en 11 h, se quita el atractivo cuya salida reduce más la duración total (su visita más el desvío que causa) y se recalcula Held-Karp. Se repite hasta que quepa.
 
 **Primer recorrido.** Con los 7 atractivos, la jornada daba 15,0 h: 12,5 h de visitas más los desplazamientos. No cabe en 11 h.
@@ -443,24 +442,18 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 ## 7. Conclusiones
 
-- **La representación decide si el problema es manejable.** La red vial del Quindío es dispersa (E ≈ 2,3·V). Como listas de adyacencia ocupa 0,37 MB; como matriz ocuparía 592 MB, con el 99,97 % de las celdas vacías.
-- **Las mediciones coinciden con la teoría.**
-  - La componente fuertemente conexa (Tarjan) tardó entre 5,3 y 5,7 µs por elemento en redes de 5 302 a 28 960 elementos, lo que confirma O(V + E).
-  - Quickhull creció como n log n.
-  - En Held-Karp el tiempo se multiplicó por un poco más de 2 en cada paso, y en la fuerza bruta por k + 1.
-- **La estructura de datos importa tanto como el algoritmo.** Las dos versiones de Dijkstra dan los mismos tiempos de viaje, pero la de cola de prioridad es entre 104 y 470 veces más rápida, porque la lineal recorre los 8 791 nodos en cada extracción.
-- **El lenguaje también cuenta.** El Quickhull propio da los mismos vértices que SciPy, que usa el mismo algoritmo, pero es entre 1,5 y 18,5 veces más lento, porque es Python interpretado frente a Qhull compilado en C.
-- **Exactitud contra tiempo.**
-  - La fuerza bruta llegó hasta k = 11 (24 s) y con k = 12 pasó el límite de 5 minutos.
-  - Held-Karp resolvió k = 12 en 25 ms, gracias a la subestructura óptima.
-  - La heurística voraz es instantánea, pero en ninguna de las 20 instancias encontró el óptimo: se alejó en promedio entre 7 % y 13 %, y hasta 21 %.
-  - Para planear un día con 6 a 8 atractivos, Held-Karp es la mejor opción: exacto y prácticamente instantáneo.
+En este proyecto vimos que la forma de representar la red influye directamente en el costo de trabajar con ella. Como el grafo del Quindío es disperso, las listas de adyacencia resultan mucho más convenientes: bajo los supuestos usados ocupan aproximadamente 0,37 MB, frente a los 592 MB estimados para una matriz de adyacencia.
 
----
+Las mediciones fueron, en general, consistentes con lo esperado. El tiempo para encontrar la componente fuertemente conexa creció de forma aproximadamente proporcional al número de nodos y aristas. En Quickhull, los tiempos observados en nuestros conjuntos de prueba fueron compatibles con un crecimiento promedio cercano a \(n\log n\). Por su parte, Held-Karp fue mucho más eficiente que la fuerza bruta al aumentar el número de lugares, aunque sigue teniendo un costo exponencial.
+
+La comparación de las dos versiones de Dijkstra mostró la importancia de elegir bien las estructuras de datos. Ambas obtuvieron los mismos tiempos de viaje en los pares comparados, pero la versión con cola de prioridad fue entre 104 y 470 veces más rápida que la lineal. La diferencia se explica porque esta última busca el siguiente nodo recorriendo todos los nodos de la red en cada extracción.
+
+En el problema del viajante, Held-Karp resolvió instancias de hasta 12 atractivos en unos 25 ms, mientras que la fuerza bruta solo alcanzó 11 antes de superar el límite de tiempo establecido. La heurística del vecino más cercano fue más rápida, pero no encontró el óptimo en las 20 instancias evaluadas; su brecha llegó hasta el 21 %. Esto muestra que una decisión local conveniente no garantiza el mejor recorrido completo.
+
+Para el itinerario de un día, Held-Karp permitió encontrar un recorrido de 10,23 horas con seis atractivos, dentro del límite de 11 horas. Sin embargo, los tiempos de viaje son estimaciones basadas en la red y en velocidades asignadas, y no consideran tráfico ni el tramo final que puede faltar entre una carretera y el lugar visitado. Por eso, los resultados sirven para comparar algoritmos y planear rutas aproximadas, pero no equivalen a una predicción exacta del tiempo real.
 
 ## Anexo. Uso de inteligencia artificial
 
 | Herramienta | Para qué se usó | Cómo se verificó |
 |---|---|---|
 | Claude (Anthropic) | Estructura del repositorio, primera versión del código y plantilla de este documento | Pruebas de `tests/` (casos a mano, NetworkX y SciPy); comparación de las dos versiones de Dijkstra y de fuerza bruta contra Held-Karp; revisión de las complejidades en las fuentes citadas; cada integrante leyó, ejecutó y explicó su parte |
-| [LLENAR otras herramientas] | | |
