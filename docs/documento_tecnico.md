@@ -1,6 +1,6 @@
 # Rutas del Paisaje Cultural Cafetero: documento técnico
 
-Helen Xiomara Giraldo · Valentina Porras · Maryam Hernández Giraldo
+Helen Xiomara Giraldo Libreros· Valentina Porras Salazar · Maryam Hernández Giraldo
 Análisis de Algoritmos, 2026-2
 
 > **Cómo usar esta plantilla.** La teoría (complejidades, recurrencias y argumentos de correctitud) ya está escrita. Lo que está entre corchetes **[LLENAR: …]** se completa con los números de `resultados/tablas.md` después de correr los scripts. Antes de entregar, cada una reescribe sus secciones con sus propias palabras.
@@ -189,9 +189,15 @@ Se midió la versión con cola en 20 pares y la lineal en 10 de ellos, los 10 pa
 | Par | Nodos explorados | Lineal (ms) | Cola (ms) | Cociente |
 |---|---|---|---|---|
 | L06 → L39 | 11 | 2,29 | 0,02 | ≈ 104 |
+| L25 → L39 | 17 | 3,95 | 0,02 | ≈ 165 |
+| L30 → L31 | 1 124 | 231,31 | 0,54 | ≈ 431 |
+| L06 → L25 | 60 | 12,42 | 0,04 | ≈ 282 |
 | L36 → L37 | 64 | 13,21 | 0,04 | ≈ 330 |
+| L12 → L20 | 59 | 12,42 | 0,04 | ≈ 311 |
+| L09 → L40 | 105 | 22,65 | 0,06 | ≈ 365 |
+| L06 → L19 | 132 | 27,36 | 0,07 | ≈ 370 |
+| L19 → L39 | 69 | 14,43 | 0,05 | ≈ 301 |
 | L11 → L24 | 332 | 69,55 | 0,15 | ≈ 460 |
-| L30 → L31 | 1 124 | 231,31 | 0,54 | ≈ 430 |
 
 **Discusión.**
 - **Versión lineal.** Su tiempo es casi exactamente proporcional a los nodos explorados: unos 0,21 ms por nodo explorado en todos los pares (2,29 / 11, 13,21 / 64, 231,31 / 1 124). Es lo que predice el análisis: por cada nodo que saca, recorre los V = 8 791 nodos buscando el mínimo, unos 23 ns por nodo revisado. Aunque el destino esté a 16 s de viaje, cada extracción paga V.
