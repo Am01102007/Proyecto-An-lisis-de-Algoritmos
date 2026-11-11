@@ -79,7 +79,7 @@ def calidad_heuristica(ids, M):
         resumen.append({"k": k, "instancias": len(b), "brecha_promedio_pct": round(sum(b) / len(b), 2),
                         "brecha_maxima_pct": round(max(b), 2)})
     guardar_csv("r4_calidad_resumen.csv", resumen)
-    (RESULTADOS / "r4_ejemplo_voraz.json").write_text(json.dumps(ejemplo, indent=2))
+    (RESULTADOS / "r4_ejemplo_voraz.json").write_text(json.dumps(ejemplo, indent=2), encoding="utf-8")
     print(resumen)
 
 
@@ -123,7 +123,7 @@ def itinerario(ids, M, lugares, elegidos=ITINERARIO, partida=ID_ARMENIA):
                "visitas_h": round(total_visitas / 3600, 2),
                "desplazamientos_h": round(costo(M, rec) / 3600, 2),
                "jornada_h": round((total_visitas + costo(M, rec)) / 3600, 2)}
-    (RESULTADOS / "r4_itinerario.json").write_text(json.dumps(resumen, indent=2, ensure_ascii=False))
+    (RESULTADOS / "r4_itinerario.json").write_text(json.dumps(resumen, indent=2, ensure_ascii=False), encoding="utf-8")
     print(resumen)
 
 

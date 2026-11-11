@@ -68,7 +68,7 @@ def main():
     vertices = envolvente_convexa(red)
     lon, lat = a_geo.transform([p[0] for p in vertices], [p[1] for p in vertices])
     (RESULTADOS / "r3_envolvente_red.json").write_text(
-        json.dumps([[la, lo] for la, lo in zip(lat, lon)]))
+        json.dumps([[la, lo] for la, lo in zip(lat, lon)]), encoding="utf-8")
 
 
 if __name__ == "__main__":

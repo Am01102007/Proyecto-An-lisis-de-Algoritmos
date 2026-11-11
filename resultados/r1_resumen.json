@@ -28,12 +28,32 @@
     {
       "id": "L15",
       "nombre": "Valle de Cocora",
-      "distancia_m": 1045.6
+      "distancia_m": 1042.5
     },
     {
-      "id": "L23",
-      "nombre": "Reserva Peñas Blancas",
-      "distancia_m": 740.5
+      "id": "L18",
+      "nombre": "Recuca",
+      "distancia_m": 553.3
+    },
+    {
+      "id": "L26",
+      "nombre": "Reserva Barbas-Bremen",
+      "distancia_m": 838.0
+    },
+    {
+      "id": "L28",
+      "nombre": "Hacienda Combia",
+      "distancia_m": 741.9
+    },
+    {
+      "id": "L29",
+      "nombre": "Hacienda San Alberto",
+      "distancia_m": 868.5
+    },
+    {
+      "id": "L33",
+      "nombre": "Finca Villa Nora",
+      "distancia_m": 1008.5
     }
   ]
 }

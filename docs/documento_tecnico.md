@@ -5,7 +5,7 @@ Análisis de Algoritmos, 2026-2
 
 > **Cómo usar esta plantilla.** La teoría (complejidades, recurrencias y argumentos de correctitud) ya está escrita. Lo que está entre corchetes **[LLENAR: …]** se completa con los números de `resultados/tablas.md` después de correr los scripts. Antes de entregar, cada una reescribe sus secciones con sus propias palabras.
 
-**Máquina de las mediciones:** portátil Lenovo con procesador Intel (Family 6 Model 183; [LLENAR: nombre comercial, en Configuración → Sistema → Acerca de]), 16 hilos, 31,7 GB de RAM, Windows 11 y Python 3.14.6. Todas las mediciones se hicieron en esa misma máquina.
+**Máquina de las mediciones:** portátil Lenovo con procesador Intel Core i5-13450HX de 13.ª generación, 16 hilos, 31,7 GB de RAM, Windows 11 y Python 3.14.6. Todas las mediciones se hicieron en esa misma máquina.
 **Fecha de descarga de la red:** 7 de noviembre de 2026. Versión de OSMnx: 2.1.1.
 
 ---
@@ -83,11 +83,11 @@ De las 20 153 aristas, solo 1 307 (6,5 %) tenían `maxspeed`, y las otras 18 846
 
 | Red | V | E | V+E | Tiempo (ms) |
 |---|---|---|---|---|
-| Radio de 2 km | 1 945 | 4 434 | 6 379 | 34,3 |
-| Radio de 5 km | 4 294 | 9 682 | 13 976 | 79,1 |
-| Radio de 10 km | 6 156 | 13 900 | 20 056 | 110,9 |
-| Radio de 20 km | 8 800 | 20 102 | 28 902 | 159,6 |
-| Departamento completo | 8 807 | 20 153 | 28 960 | 159,3 |
+| Radio de 2 km | 1 647 | 3 655 | 5 302 | 30,3 |
+| Radio de 5 km | 4 301 | 9 712 | 14 013 | 74,1 |
+| Radio de 10 km | 5 916 | 13 332 | 19 248 | 105,3 |
+| Radio de 20 km | 8 772 | 20 043 | 28 815 | 158,8 |
+| Departamento completo | 8 807 | 20 153 | 28 960 | 161,1 |
 
 ![Componente: tiempo frente a V+E](../graficas/r1_componente.png)
 
@@ -95,15 +95,15 @@ De las 20 153 aristas, solo 1 307 (6,5 %) tenían `maxspeed`, y las otras 18 846
 
 | Red | Tiempo / (V + E) |
 |---|---|
-| Radio de 2 km | 5,38 µs |
-| Radio de 5 km | 5,66 µs |
-| Radio de 10 km | 5,53 µs |
-| Radio de 20 km | 5,52 µs |
-| Departamento completo | 5,50 µs |
+| Radio de 2 km | 5,71 µs |
+| Radio de 5 km | 5,29 µs |
+| Radio de 10 km | 5,47 µs |
+| Radio de 20 km | 5,51 µs |
+| Departamento completo | 5,56 µs |
 
-- El cociente se mantiene entre 5,4 y 5,7 µs por elemento, aunque V + E crece 4,5 veces del radio de 2 km al departamento. La gráfica es prácticamente una recta, lo que coincide con O(V + E).
+- El cociente se mantiene entre 5,3 y 5,7 µs por elemento, aunque V + E crece 5,5 veces del radio de 2 km al departamento. La gráfica es prácticamente una recta, lo que coincide con O(V + E).
 - La pequeña variación se explica por el ruido de la medición y el manejo de memoria de Python. No sigue ninguna tendencia que sugiera un crecimiento mayor, como V log V o V².
-- La red de 20 km es casi igual al departamento completo (28 902 contra 28 960): el cuadrado de 40 × 40 km alrededor de Armenia cubre casi toda la red vial del Quindío. Por eso sus tiempos son prácticamente iguales.
+- La red de 20 km es casi igual al departamento completo (28 815 contra 28 960): el cuadrado de 40 × 40 km alrededor de Armenia cubre casi toda la red vial del Quindío. Por eso sus tiempos son prácticamente iguales.
 
 **Por qué trabajar solo con la componente.** En la componente fuertemente conexa, desde cualquier nodo se puede llegar a cualquier otro respetando el sentido de las vías. Así:
 - Dijkstra siempre encuentra una ruta entre dos lugares.
@@ -116,8 +116,23 @@ Los nodos que quedan fuera, como calles sin salida de un solo sentido o fragment
 
 - Las coordenadas de los lugares y de los nodos se convierten a UTM zona 18N (EPSG:32618) con `pyproj`.
 - Cada lugar se asocia al nodo con menor distancia euclidiana, por recorrido lineal: O(V) por lugar y O(L·V) en total, con L lugares.
-- Lugares a más de 500 m de su nodo: en la primera ejecución fueron 7 (PANACA, Valle de Cocora, Reserva Peñas Blancas, el balsaje del río La Vieja y tres fincas). Se revisaron en Google Maps y se corrigieron sus coordenadas, ubicándolas en la entrada o el parqueadero. Quedaron 2: Valle de Cocora (1 045,6 m) y Reserva Peñas Blancas (740,5 m). [CONFIRMAR después de cerrar el catálogo]
-- Cómo se trataron: en los dos casos el nodo más cercano es una vía rural (`unclassified`) donde termina la carretera, y el resto del recorrido hasta el atractivo es un sendero peatonal que no hace parte de la red `drive`. Se mantiene ese nodo como origen y destino de las rutas, y se aclara que el último tramo, a pie, no está modelado. [CONFIRMAR]
+- Lugares a más de 500 m de su nodo:
+  - En la primera ejecución fueron 7.
+  - Se revisaron en Google Maps todas las coordenadas del catálogo y se corrigieron: las cabeceras en su plaza principal, y los demás lugares en su entrada o parqueadero.
+  - Con el catálogo final quedaron 6:
+
+  | Lugar | Distancia al nodo (m) |
+  |---|---|
+  | Valle de Cocora | 1 042,5 |
+  | Finca Villa Nora | 1 008,5 |
+  | Hacienda San Alberto | 868,5 |
+  | Reserva Barbas-Bremen | 838,0 |
+  | Hacienda Combia | 741,9 |
+  | Recuca | 553,3 |
+
+- Cómo se trataron:
+  - En los 6 casos la coordenada es correcta. El último tramo hasta el lugar es un sendero peatonal (Cocora y Barbas-Bremen) o una vía destapada privada dentro de la finca (Villa Nora, San Alberto, Combia y Recuca), y ninguno de los dos aparece como vía para carro (`network_type="drive"`) en OpenStreetMap.
+  - Se mantiene como origen y destino el nodo vial más cercano, que corresponde al punto donde termina la carretera. El tiempo de ese último tramo no está modelado, y es una limitación del modelo.
 
 ### 2.5 Grafo procesado
 
@@ -167,19 +182,27 @@ Se midió la versión con cola en 20 pares y la lineal en 10 de ellos, los 10 pa
 
 | Mediana | Mínimo | Máximo |
 |---|---|---|
-| [LLENAR] | [LLENAR] | [LLENAR] |
+| 305,6 | 104,0 | 469,9 |
 
 *Cociente = tiempo lineal / tiempo con cola, en ms, en los 10 pares.*
 
-**Discusión.** [LLENAR.
-- La versión lineal hace V comparaciones por cada nodo explorado, así que su tiempo crece como (nodos explorados) × V, aunque el destino esté cerca.
-- La versión con cola solo paga por lo que explora, con un factor log.
-- Por eso el cociente es grande y aumenta con los nodos explorados.
-- Comentar si los puntos de la gráfica siguen esa tendencia.]
+| Par | Nodos explorados | Lineal (ms) | Cola (ms) | Cociente |
+|---|---|---|---|---|
+| L06 → L39 | 11 | 2,29 | 0,02 | ≈ 104 |
+| L36 → L37 | 64 | 13,21 | 0,04 | ≈ 330 |
+| L11 → L24 | 332 | 69,55 | 0,15 | ≈ 460 |
+| L30 → L31 | 1 124 | 231,31 | 0,54 | ≈ 430 |
+
+**Discusión.**
+- **Versión lineal.** Su tiempo es casi exactamente proporcional a los nodos explorados: unos 0,21 ms por nodo explorado en todos los pares (2,29 / 11, 13,21 / 64, 231,31 / 1 124). Es lo que predice el análisis: por cada nodo que saca, recorre los V = 8 791 nodos buscando el mínimo, unos 23 ns por nodo revisado. Aunque el destino esté a 16 s de viaje, cada extracción paga V.
+- **Versión con cola.** Paga unos 0,5 µs por nodo explorado, porque solo mira los vecinos del nodo y hace operaciones O(log V) en el montículo. En la consulta más grande (8 553 nodos explorados) tardó 4,7 ms.
+- **Cociente.** Es grande, de 104 a 470 veces, como se esperaba de comparar V con log V. Es menor en los pares con muy pocos nodos explorados, porque ahí pesan los costos fijos de la versión con cola, como crear los arreglos de tamaño V. Cuando se exploran cientos de nodos se estabiliza entre 300 y 470.
+- **Gráfica.** Está en escala logarítmica. Para el mismo número de nodos explorados, los puntos de la versión lineal quedan entre dos y tres órdenes de magnitud por encima de los de la versión con cola. Por ejemplo, con unos 1 100 nodos la lineal tarda 231 ms y la de cola 0,5 ms. La versión con cola llega hasta 8 553 nodos en menos de 5 ms, mientras que la lineal se midió en 10 pares, que exploran hasta 1 124 nodos.
+- **Un caso llamativo.** Finca El Ocaso → Finca Don Elías (L30 → L31) toma 1 141,8 s (19 min), aunque las dos fincas quedan a unos 250 m en línea recta. Están sobre vías distintas y la ruta debe dar la vuelta por la red, así que Dijkstra exploró 1 124 nodos. Por eso el tiempo de viaje no se puede estimar con la distancia en línea recta.
 
 **Verificación.** En los 10 pares las dos versiones dieron el mismo tiempo de viaje: `mismos_tiempos: true` en `r2_cocientes.json`, comprobado con `assert`. Además, `tests/test_algoritmos.py` compara con el ejemplo a mano y con NetworkX en 50 grafos al azar.
 
-**Matriz de tiempos.** Se ejecutó `dijkstra_cola` sin destino una vez desde cada uno de los L = [LLENAR] lugares: O(L·(V + E) log V). Está en `resultados/matriz_tiempos.csv` y no es simétrica. Ejemplo: [LLENAR un par i→j y j→i con tiempos distintos].
+**Matriz de tiempos.** Se ejecutó `dijkstra_cola` sin destino una vez desde cada uno de los L = 40 lugares: O(L·(V + E) log V). Está en `resultados/matriz_tiempos.csv` y no es simétrica. Ejemplos: de Armenia (L01) a Salento (L12) son 1 776,5 s, y de Salento a Armenia 1 712,2 s. La mayor diferencia está entre la Reserva Barbas-Bremen (L26) y la Trilladora La Primavera (L38): 3 272,9 s de ida contra 3 667,5 s de regreso, 6,6 minutos más. Las diferencias vienen de las vías de un solo sentido y de que la ruta de ida y la de regreso pueden usar tramos distintos. El viaje más largo de la matriz es del Valle de Cocora (L15) a Génova (L07): 7 046,8 s, casi 2 horas.
 
 ---
 
@@ -227,15 +250,26 @@ T(n) = T(n₁) + T(n₂) + b·n, con n₁ + n₂ ≤ n − 1, T(1) = a.
 
 | Conjunto de puntos | n | Vértices de la envolvente | Tiempo propio (ms) | Tiempo SciPy (ms) | Cociente |
 |---|---|---|---|---|---|
-| [LLENAR desde tablas.md] ||||||
+| Nodos de la red | 8 791 | 14 | 8,22 | 1,32 | 6,3 |
+| Cuadrado, 1 000 puntos | 1 000 | 16 | 1,08 | 0,71 | 1,5 |
+| Cuadrado, 10 000 puntos | 10 000 | 26 | 12,51 | 1,71 | 7,3 |
+| Cuadrado, 50 000 puntos | 50 000 | 25 | 81,17 | 4,38 | 18,5 |
 
-**Verificación.** En los 4 conjuntos el programa comprueba con `assert` que el conjunto de vértices es igual al de SciPy. En `tests/` además se prueba con 200 conjuntos al azar con muchos puntos alineados, y con una cuadrícula de 11 × 11 cuya envolvente son solo las 4 esquinas.
+*Mediana de 5 ejecuciones. Puntos al azar con semilla 2026 en un cuadrado de 1 000 km de lado, en coordenadas enteras.*
 
-**Discusión.** [LLENAR.
-- Los dos usan el mismo algoritmo, Quickhull, así que la diferencia viene de la implementación: SciPy ejecuta código C compilado sobre arreglos de NumPy, y la versión propia es Python interpretado, con un objeto por punto y listas nuevas en cada división.
-- Por eso el cociente es un factor casi constante, de unas [LLENAR] veces, en los cuadrados de 1 000 a 50 000 puntos.
-- Al pasar de 10 000 a 50 000 puntos, el tiempo debe crecer un poco más de 5 veces, como corresponde a n log n.
-- Comentar también el número de vértices: en puntos uniformes en un cuadrado crece muy despacio, como O(log n).]
+**Verificación.** En los 4 conjuntos el programa comprueba con `assert` que el conjunto de vértices es igual al de SciPy, y en todos coincidió. En `tests/` además se prueba con 200 conjuntos al azar con muchos puntos alineados, y con una cuadrícula de 11 × 11 cuya envolvente son solo las 4 esquinas.
+
+**Discusión.**
+- **Crecimiento de la versión propia.**
+  - De 1 000 a 10 000 puntos, el tiempo se multiplicó por 11,6. Para n log n se esperaba 10 · (log 10 000 / log 1 000) ≈ 13,3.
+  - De 10 000 a 50 000, se multiplicó por 6,5. Se esperaba 5 · (log 50 000 / log 10 000) ≈ 5,9.
+  - Los dos cocientes están cerca de lo previsto para O(n log n), el caso promedio de Quickhull, y lejos del peor caso O(n²), que habría multiplicado el tiempo por 100 y por 25.
+- **Por qué no se llega al peor caso.** En puntos uniformes en un cuadrado, la envolvente tiene muy pocos vértices (16, 26 y 25), y crecen como O(log n). Cada división descarta casi todos los puntos dentro del triángulo, así que las llamadas recursivas trabajan con conjuntos pequeños.
+- **Nodos de la red.** Con 8 791 puntos la envolvente tiene solo 14 vértices, y el tiempo (8,2 ms) es menor que el de 10 000 puntos al azar. Coincide con la justificación de la sección 4.1: la mayoría de los nodos se concentra en las cabeceras, en el interior del departamento, y se descarta en las primeras divisiones.
+- **Comparación con SciPy.**
+  - Los dos usan el mismo algoritmo, Quickhull, así que la diferencia viene de la implementación. SciPy ejecuta Qhull, compilado en C, sobre un arreglo de NumPy. La versión propia es Python interpretado, con un objeto tupla por punto y listas nuevas en cada división.
+  - El cociente no es constante: pasa de 1,5 con 1 000 puntos a 18,5 con 50 000. Con pocos puntos, el tiempo de SciPy lo dominan costos fijos que no dependen de n, como pasar de Python a C, preparar Qhull y construir el objeto de resultado. Por eso de 1 000 a 50 000 puntos SciPy solo multiplica su tiempo por 6,2, mientras la versión propia lo multiplica por 75.
+  - Con muchos puntos pesa el costo por punto, que en C es mucho menor que en Python. Por eso la ventaja de SciPy crece con n.
 
 ---
 
@@ -283,16 +317,37 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 | k | Tiempo fuerza bruta (ms) | Tiempo Held-Karp (ms) |
 |---|---|---|
-| [LLENAR desde tablas.md, k = 5 a 12] |||
+| 5 | 0,07 | 0,07 |
+| 6 | 0,48 | 0,19 |
+| 7 | 2,67 | 0,47 |
+| 8 | 20,05 | 0,92 |
+| 9 | 193,22 | 1,88 |
+| 10 | 2 047,70 | 4,58 |
+| 11 | 24 342,65 | 10,63 |
+| 12 | no completada (> 5 min) | 25,48 |
 
 ![Viajante: tiempo frente a k](../graficas/r4_exactos.png)
 
-**Mayor k resuelto:** con fuerza bruta, k = [LLENAR]; con Held-Karp, k = 12.
+**Mayor k resuelto:** con fuerza bruta, k = 11 (24,3 s); con Held-Karp, k = 12 (25,5 ms), el máximo que pide el enunciado.
 
-**Discusión.** [LLENAR.
-- Al pasar de k a k + 1, la fuerza bruta debe multiplicar su tiempo por cerca de (k + 1), por ejemplo ×11 de 10 a 11, y Held-Karp por cerca de 2·((k + 1)/k)².
-- Comprobar esos cocientes con la tabla.
-- En escala logarítmica, Held-Karp se ve casi como una recta (exponencial) y la fuerza bruta se curva hacia arriba (factorial).]
+**Discusión.** Al pasar de k a k + 1:
+
+| Paso | Fuerza bruta (medido) | Esperado ≈ k + 1 | Held-Karp (medido) | Esperado ≈ 2·((k + 1)/k)² |
+|---|---|---|---|---|
+| 5 → 6 | × 6,9 | × 6 | × 2,7 | × 2,9 |
+| 6 → 7 | × 5,5 | × 7 | × 2,5 | × 2,7 |
+| 7 → 8 | × 7,5 | × 8 | × 1,9 | × 2,6 |
+| 8 → 9 | × 9,6 | × 9 | × 2,0 | × 2,5 |
+| 9 → 10 | × 10,6 | × 10 | × 2,4 | × 2,5 |
+| 10 → 11 | × 11,9 | × 11 | × 2,3 | × 2,4 |
+| 11 → 12 | no completada | × 12 | × 2,4 | × 2,4 |
+
+- **Fuerza bruta.** Desde k = 8, el tiempo se multiplica por casi exactamente k + 1, como predice Θ(k!·k). Con k pequeño los cocientes se desvían más, porque los tiempos son de fracciones de milisegundo y pesan los costos fijos.
+  - Para k = 12 se esperaba unos 12 × 24,3 s ≈ 4,9 min, justo en el límite de 5 minutos del protocolo. La ejecución lo pasó y se detuvo, así que se reporta como no completada.
+  - 12! ≈ 479 millones de recorridos.
+- **Held-Karp.** El tiempo se multiplica por un poco más de 2 en cada paso, como predice Θ(2ᵏ·k²): el 2 viene de duplicar los subconjuntos y el ((k + 1)/k)² de las comparaciones por estado. Con k = 12 tarda 25,5 ms, unas 1 000 veces menos que la fuerza bruta con k = 11.
+- **Gráfica.** En escala logarítmica, Held-Karp sube casi en línea recta, lo que es propio de un crecimiento exponencial. La fuerza bruta sube cada vez más empinada, porque el factorial crece más rápido que cualquier exponencial.
+- **Memoria de Held-Karp.** Las tablas ocupan 2 · 2ᵏ · k · 8 bytes: 2,5 KB con k = 5, 160 KB con k = 10 y 768 KB con k = 12. En Python el consumo real es varias veces mayor, por los objetos `float`, pero sigue siendo de pocos MB.
 
 **Verificación.** Para cada k que la fuerza bruta resolvió, el programa comprueba con `assert` que el tiempo óptimo es igual al de Held-Karp. En `tests/` se prueba además con 100 instancias al azar.
 
@@ -300,18 +355,37 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 | k | Instancias | Brecha promedio (%) | Brecha máxima (%) |
 |---|---|---|---|
-| [LLENAR desde tablas.md] ||||
+| 5 | 5 | 8,06 | 21,10 |
+| 8 | 5 | 8,69 | 15,03 |
+| 10 | 5 | 6,70 | 12,86 |
+| 12 | 5 | 12,72 | 19,93 |
 
-[LLENAR: discusión de la brecha. ¿Crece con k? ¿Hay instancias en las que la voraz acierta (brecha 0)?]
+- **La voraz nunca acertó.** En las 20 instancias su recorrido fue más largo que el óptimo. La menor brecha fue 1,0 % (k = 10) y la mayor 21,1 % (k = 5).
+- **En promedio se aleja entre 7 % y 13 %.** La brecha no crece de forma clara con k: el promedio baja de 8,7 % (k = 8) a 6,7 % (k = 10) y sube a 12,7 % con k = 12. Con solo 5 instancias por k, la variación entre instancias pesa más que el efecto de k. El peor caso depende de cómo estén repartidos los lugares, no solo de cuántos sean.
+- **Qué significa en la práctica.** Con k = 12, el óptimo medio es de unas 4,9 horas de desplazamiento y la voraz agrega en promedio unos 36 minutos. A cambio, la voraz es instantánea, O(k²), y Held-Karp crece exponencialmente.
 
 ### 5.5 Itinerario de un día
 
-- Partida: Armenia (plaza de Bolívar). Atractivos elegidos: [LLENAR desde `r4_itinerario.json`]. Se ordenan con Held-Karp.
+- Partida: Armenia (plaza de Bolívar). Atractivos elegidos (7): Valle de Cocora, Jardín Botánico del Quindío, Museo del Oro Quimbaya, Mirador de Filandia, Calle Real y mirador Alto de la Cruz, Parque de la Vida y Mirador Encanto Filandia. Se ordenan con Held-Karp.
 - Duración = desplazamientos (matriz del R2) + visitas (columna `duracion_visita_min` del catálogo).
 - Criterio de las duraciones: [LLENAR fuente o criterio. Por ejemplo, el tiempo que sugiere la página oficial del parque, o 60 min para miradores, 90 min para museos y 4 a 6 h para parques temáticos].
 - Si no cabe en 11 h, se quita el atractivo cuya salida reduce más la duración total (su visita más el desvío que causa) y se recalcula Held-Karp. Se repite hasta que quepa.
 
-[LLENAR: pegar la tabla del itinerario de `tablas.md`, con el total de visitas, el total de desplazamientos y la duración de la jornada. Si se quitaron atractivos, decir cuáles y por qué.]
+**Primer recorrido.** Con los 7 atractivos, la jornada daba 15,0 h: 12,5 h de visitas más los desplazamientos. No cabe en 11 h.
+
+**Atractivo quitado: el Valle de Cocora.** Era la salida que más reducía la duración, porque sumaba la visita más larga del grupo (240 min) y el mayor desvío, al ser el lugar más alejado de los demás (al este de Salento, al final de la carretera). Sin él se recalculó Held-Karp con los 6 restantes:
+
+| Orden | Lugar | Desplazamiento desde el anterior (min) | Visita (min) | Tiempo acumulado (h) |
+|---|---|---|---|---|
+| 1 | Jardín Botánico del Quindío | 8,4 | 150 | 2,64 |
+| 2 | Calle Real y mirador Alto de la Cruz | 28,0 | 90 | 4,61 |
+| 3 | Mirador Encanto Filandia | 26,8 | 60 | 6,05 |
+| 4 | Mirador de Filandia | 2,0 | 60 | 7,09 |
+| 5 | Museo del Oro Quimbaya | 29,9 | 90 | 9,09 |
+| 6 | Parque de la Vida | 4,2 | 60 | 10,16 |
+| Regreso | Armenia (plaza de Bolívar) | 4,5 | — | 10,23 |
+
+**Totales:** 8,5 h de visitas, 1,73 h de desplazamientos y 10,23 h de jornada, así que **cabe en 11 h**. El orden tiene sentido geográfico: sale hacia Calarcá (Jardín Botánico), sube a Salento y Filandia, que quedan cerca entre sí, y regresa por el norte de Armenia (Museo del Oro y Parque de la Vida).
 
 ### 5.6 Voraz frente a óptimo
 
@@ -326,7 +400,10 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 - **Voraz:** 0 → 1 (1) → 2 (1) → 3 (1) → 0 (20) = **23**. Cada paso es el más barato, pero termina en 3, que queda muy lejos del inicio.
 - **Óptimo (Held-Karp):** 0 → 3 (5) → 2 (2) → 1 (2) → 0 (1) = **10**.
-- Con datos reales: [LLENAR con `resultados/r4_ejemplo_voraz.json`].
+- **Con datos reales** (instancia 0 con k = 5, desde Armenia):
+  - **Voraz, 7 861 s (2,18 h):** Armenia → Parque de la Vida → Museo del Oro → Almacafé → Finca El Ocaso → Hacienda Bambusa → Armenia. Empieza por los dos lugares más cercanos, al norte de Armenia, y luego zigzaguea: baja a Almacafé, sube a Salento (El Ocaso), vuelve a bajar hasta Hacienda Bambusa, en el sur, y desde allá regresa.
+  - **Óptimo (Held-Karp), 6 492 s (1,80 h):** Armenia → Almacafé → Hacienda Bambusa → Finca El Ocaso → Museo del Oro → Parque de la Vida → Armenia. Primero hace el sur, luego sube a Salento y vuelve por el norte de Armenia, sin cruzar el departamento dos veces.
+  - La voraz tarda 21,1 % más, unos 23 minutos.
 
 **Por qué en Dijkstra lo voraz sí funciona y aquí no.**
 - En Dijkstra, la decisión voraz (fijar el nodo de menor distancia) nunca se arrepiente. Por el invariante y porque los pesos no son negativos, ningún camino que se descubra después puede llegar a ese nodo más barato. La decisión solo depende de lo ya explorado, y el problema tiene la propiedad de elección voraz.
@@ -337,25 +414,41 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 ## 6. Requerimiento 5. Aplicación
 
-- Se ejecuta con `streamlit run src/app.py` y usa Streamlit con mapas de Folium.
+- Se ejecuta con `python -m streamlit run src/app.py` y usa Streamlit con mapas de Folium.
 - Tiene cuatro pestañas:
   1. Ruta entre dos lugares: Dijkstra con cola, calculado en el momento.
   2. Envolvente convexa sobre el mapa.
   3. Itinerario de un día: partida y de 6 a 8 atractivos, con los recorridos de Held-Karp y de la voraz, el tiempo total de cada uno y la diferencia. Los tramos se dibujan por las vías con Dijkstra.
   4. Tablas y gráficas de R1 a R4.
 
-[LLENAR: 2 o 3 capturas de pantalla.]
+**Figura 1.** Ruta de Armenia (plaza de Bolívar) a Buenavista: 37,0 min. Dijkstra exploró 7 997 nodos y la ruta tiene 127 nodos.
+
+![Ruta entre dos lugares](capturas/ruta.png)
+
+**Figura 2.** Envolvente convexa de la red vial del departamento.
+
+![Envolvente convexa](capturas/envolvente.png)
+
+**Figura 3.** Itinerario de un día: recorrido óptimo (Held-Karp) frente al voraz.
+
+![Itinerario de un día](capturas/itinerario.png)
 
 ---
 
 ## 7. Conclusiones
 
-[LLENAR, de 4 a 6 viñetas. Ideas:
-- Las listas de adyacencia fueron indispensables, porque la matriz no cabe de forma razonable en memoria.
-- Lo medido para la componente y para Dijkstra coincide con O(V + E) y con O((V + E) log V).
-- Quickhull propio es correcto pero [LLENAR] veces más lento que Qhull, por lenguaje y no por algoritmo.
-- Held-Karp hace práctico el viajante hasta k = 12, mientras que la fuerza bruta se detiene en k = [LLENAR].
-- La voraz es instantánea pero se aleja hasta [LLENAR] % del óptimo.]
+- **La representación decide si el problema es manejable.** La red vial del Quindío es dispersa (E ≈ 2,3·V). Como listas de adyacencia ocupa 0,37 MB; como matriz ocuparía 592 MB, con el 99,97 % de las celdas vacías.
+- **Las mediciones coinciden con la teoría.**
+  - La componente fuertemente conexa (Tarjan) tardó entre 5,3 y 5,7 µs por elemento en redes de 5 302 a 28 960 elementos, lo que confirma O(V + E).
+  - Quickhull creció como n log n.
+  - En Held-Karp el tiempo se multiplicó por un poco más de 2 en cada paso, y en la fuerza bruta por k + 1.
+- **La estructura de datos importa tanto como el algoritmo.** Las dos versiones de Dijkstra dan los mismos tiempos de viaje, pero la de cola de prioridad es entre 104 y 470 veces más rápida, porque la lineal recorre los 8 791 nodos en cada extracción.
+- **El lenguaje también cuenta.** El Quickhull propio da los mismos vértices que SciPy, que usa el mismo algoritmo, pero es entre 1,5 y 18,5 veces más lento, porque es Python interpretado frente a Qhull compilado en C.
+- **Exactitud contra tiempo.**
+  - La fuerza bruta llegó hasta k = 11 (24 s) y con k = 12 pasó el límite de 5 minutos.
+  - Held-Karp resolvió k = 12 en 25 ms, gracias a la subestructura óptima.
+  - La heurística voraz es instantánea, pero en ninguna de las 20 instancias encontró el óptimo: se alejó en promedio entre 7 % y 13 %, y hasta 21 %.
+  - Para planear un día con 6 a 8 atractivos, Held-Karp es la mejor opción: exacto y prácticamente instantáneo.
 
 ---
 

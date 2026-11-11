@@ -148,10 +148,10 @@ def main():
     guardar_maquina()
     print("Red del departamento (si ya está en datos/, no se descarga otra vez)...")
     if not RED_COMPLETA.exists():
-        (RESULTADOS / "fecha_descarga.txt").write_text(str(date.today()))
+        (RESULTADOS / "fecha_descarga.txt").write_text(str(date.today()), encoding="utf-8")
     G = red_guardada(RED_COMPLETA, ox.graph_from_place, LUGAR, network_type="drive")
     archivo_fecha = RESULTADOS / "fecha_descarga.txt"
-    fecha = archivo_fecha.read_text() if archivo_fecha.exists() else str(date.today())
+    fecha = archivo_fecha.read_text(encoding="utf-8").strip() if archivo_fecha.exists() else str(date.today())
     resumen = {"fecha_descarga": fecha, "osmnx": ox.__version__,
                "red_descargada": {"nodos": G.number_of_nodes(), "aristas": G.number_of_edges()}}
 
@@ -174,7 +174,7 @@ def main():
         for l in lugares if l["distancia_nodo_m"] > UMBRAL_LEJANO_M]
 
     ox.save_graphml(C, COMPONENTE)
-    (RESULTADOS / "r1_resumen.json").write_text(json.dumps(resumen, indent=2, ensure_ascii=False))
+    (RESULTADOS / "r1_resumen.json").write_text(json.dumps(resumen, indent=2, ensure_ascii=False), encoding="utf-8")
     print(json.dumps(resumen, indent=2, ensure_ascii=False))
 
 

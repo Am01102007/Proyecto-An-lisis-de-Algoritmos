@@ -1,0 +1,22 @@
+{
+  "partida": "Armenia (plaza de Bolívar)",
+  "elegidos": [
+    "L15",
+    "L16",
+    "L17",
+    "L19",
+    "L20",
+    "L21",
+    "L25"
+  ],
+  "quitados": [
+    {
+      "id": "L15",
+      "nombre": "Valle de Cocora",
+      "duracion_antes_h": 15.0
+    }
+  ],
+  "visitas_h": 8.5,
+  "desplazamientos_h": 1.73,
+  "jornada_h": 10.23
+}

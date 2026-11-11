@@ -67,7 +67,7 @@ def r2():
     plt.tight_layout()
     plt.savefig(GRAFICAS / "r2_dijkstra.png", dpi=150)
     plt.close()
-    c = json.loads((RESULTADOS / "r2_cocientes.json").read_text())
+    c = json.loads((RESULTADOS / "r2_cocientes.json").read_text(encoding="utf-8"))
     md = tabla("R2. Mediciones de Dijkstra (ms)", list(filas[0].keys()), [list(f.values()) for f in filas])
     md += tabla("R2. Cociente lineal / cola de prioridad (10 pares)", ["Mediana", "Mínimo", "Máximo"],
                 [[f"{c['mediana']:.1f}", f"{c['minimo']:.1f}", f"{c['maximo']:.1f}"]])

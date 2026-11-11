@@ -37,5 +37,5 @@ def guardar_maquina():
         "sistema_operativo": f"{platform.system()} {platform.release()}",
         "python": platform.python_version(),
     }
-    (RESULTADOS / "maquina.json").write_text(json.dumps(info, indent=2, ensure_ascii=False))
+    (RESULTADOS / "maquina.json").write_text(json.dumps(info, indent=2, ensure_ascii=False), encoding="utf-8")
     return info

@@ -90,7 +90,7 @@ def main():
         w.writeheader()
         w.writerows(filas)
     resumen = verificar_y_cocientes(filas)
-    (RESULTADOS / "r2_cocientes.json").write_text(json.dumps(resumen, indent=2))
+    (RESULTADOS / "r2_cocientes.json").write_text(json.dumps(resumen, indent=2), encoding="utf-8")
     print(resumen)
 
     print("Matriz de tiempos...")

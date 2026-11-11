@@ -64,7 +64,7 @@ with ruta_tab:
 with envolvente_tab:
     archivo = RESULTADOS / "r3_envolvente_red.json"
     if archivo.exists():
-        vertices = json.loads(archivo.read_text())
+        vertices = json.loads(archivo.read_text(encoding="utf-8"))
         mapa = folium.Map(location=CENTRO, zoom_start=9)
         folium.Polygon(vertices, color="purple", fill=True, fill_opacity=.15).add_to(mapa)
         st.caption(f"{len(vertices)} vértices (Quickhull propio, verificado con SciPy)")
