@@ -1,6 +1,6 @@
 # Rutas del Paisaje Cultural Cafetero
 
-Proyecto final de Análisis de Algoritmos (2026-2). Integrantes: Helen Xiomara Giraldo, Valentina Porras y Maryam Hernández Giraldo.
+Proyecto final de Análisis de Algoritmos (2026-2). Integrantes: Helen Xiomara Giraldo Libreros, Valentina Porras Salazar y Maryam Hernández Giraldo.
 
 Sistema de planificación de rutas sobre la red vial del Quindío (OpenStreetMap), con análisis teórico y experimental de Dijkstra, la envolvente convexa (Quickhull), la fuerza bruta, Held-Karp y una heurística voraz para el viajante asimétrico.
 
@@ -31,7 +31,7 @@ python src/r2_caminos.py           # 3. R2: Dijkstra y matriz de tiempos (la ver
 python src/r3_envolvente.py        # 4. R3: envolvente convexa contra SciPy
 python src/r4_ruta.py              # 5. R4: fuerza bruta, Held-Karp, voraz e itinerario (hasta ~15 min)
 python src/graficas.py             # 6. tablas y gráficas desde los CSV
-streamlit run src/app.py           # 7. R5: aplicación en el navegador
+python -m streamlit run src/app.py           # 7. R5: aplicación en el navegador
 ```
 
 Después del paso 2 ya no hace falta internet: la componente queda guardada en `datos/componente.graphml`.
