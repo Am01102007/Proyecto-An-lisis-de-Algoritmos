@@ -191,12 +191,12 @@ Se midió la versión con cola en 20 pares y la lineal en 10 de ellos, los 10 pa
 | L25 → L39 | 17 | 3,95 | 0,02 | ≈ 165 |
 | L30 → L31 | 1 124 | 231,31 | 0,54 | ≈ 431 |
 | L06 → L25 | 60 | 12,42 | 0,04 | ≈ 282 |
-| L36 → L37 | 64 | 13,21 | 0,04 | ≈ 330 |
+| L36 → L37 | 64 | 13,21 | 0,04 | ≈ 300 |
 | L12 → L20 | 59 | 12,42 | 0,04 | ≈ 311 |
 | L09 → L40 | 105 | 22,65 | 0,06 | ≈ 365 |
 | L06 → L19 | 132 | 27,36 | 0,07 | ≈ 370 |
 | L19 → L39 | 69 | 14,43 | 0,05 | ≈ 301 |
-| L11 → L24 | 332 | 69,55 | 0,15 | ≈ 460 |
+| L11 → L24 | 332 | 69,55 | 0,15 | ≈ 470 |
 
 **Discusión.**
 - **Versión lineal.** Su tiempo es casi exactamente proporcional a los nodos explorados: unos 0,21 ms por nodo explorado en todos los pares (2,29 / 11, 13,21 / 64, 231,31 / 1 124). Es lo que predice el análisis: por cada nodo que saca, recorre los V = 8 791 nodos buscando el mínimo, unos 23 ns por nodo revisado. Aunque el destino esté a 16 s de viaje, cada extracción paga V.
@@ -434,7 +434,7 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 ![Envolvente convexa](capturas/envolvente.png)
 
-**Figura 3.** Itinerario de un día: recorrido óptimo (Held-Karp) frente al voraz.
+**Figura 3.** Itinerario de un día con 6 atractivos desde Armenia: Held-Karp 10,23 h, voraz 10,41 h; la voraz tarda 10,6 min más (10,2 %).
 
 ![Itinerario de un día](capturas/itinerario.png)
 
@@ -444,7 +444,7 @@ Fuente: M. Held y R. M. Karp, «A dynamic programming approach to sequencing pro
 
 En este proyecto vimos que la forma de representar la red influye directamente en el costo de trabajar con ella. Como el grafo del Quindío es disperso, las listas de adyacencia resultan mucho más convenientes: bajo los supuestos usados ocupan aproximadamente 0,37 MB, frente a los 592 MB estimados para una matriz de adyacencia.
 
-Las mediciones fueron, en general, consistentes con lo esperado. El tiempo para encontrar la componente fuertemente conexa creció de forma aproximadamente proporcional al número de nodos y aristas. En Quickhull, los tiempos observados en nuestros conjuntos de prueba fueron compatibles con un crecimiento promedio cercano a \(n\log n\). Por su parte, Held-Karp fue mucho más eficiente que la fuerza bruta al aumentar el número de lugares, aunque sigue teniendo un costo exponencial.
+Las mediciones fueron, en general, consistentes con lo esperado. El tiempo para encontrar la componente fuertemente conexa creció de forma aproximadamente proporcional al número de nodos y aristas. En Quickhull, los tiempos observados en nuestros conjuntos de prueba fueron compatibles con un crecimiento promedio cercano a n log n. Por su parte, Held-Karp fue mucho más eficiente que la fuerza bruta al aumentar el número de lugares, aunque sigue teniendo un costo exponencial.
 
 La comparación de las dos versiones de Dijkstra mostró la importancia de elegir bien las estructuras de datos. Ambas obtuvieron los mismos tiempos de viaje en los pares comparados, pero la versión con cola de prioridad fue entre 104 y 470 veces más rápida que la lineal. La diferencia se explica porque esta última busca el siguiente nodo recorriendo todos los nodos de la red en cada extracción.
 
