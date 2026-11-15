@@ -12,12 +12,38 @@ Análisis de Algoritmos, 2026-2
 ## 1. Arquitectura de la solución
 
 ```
- OpenStreetMap ──► r1_red.py ──► datos/componente.graphml ──┬──► r2_caminos.py ──► resultados/matriz_tiempos.csv ──► r4_ruta.py
- catalogo.csv  ──►   (R1)    ──► datos/lugares_nodos.csv ───┤        (R2)                                            (R4)
-                                                            └──► r3_envolvente.py ──► r3_envolvente_red.json
-                                                                       (R3)
- resultados/*.csv ──► graficas.py ──► graficas/*.png, resultados/tablas.md
- componente + lugares + matriz + envolvente ──► app.py (R5, Streamlit + Folium)
+ Entradas: OpenStreetMap, catalogo.csv
+   │
+   ▼
+ r1_red.py (R1)
+   ├─► datos/componente.graphml
+   └─► datos/lugares_nodos.csv
+         │
+         ├─► r2_caminos.py (R2)
+         │      │
+         │      ▼
+         │    resultados/matriz_tiempos.csv
+         │      │
+         │      ▼
+         │    r4_ruta.py (R4)
+         │
+         └─► r3_envolvente.py (R3)
+                │
+                ▼
+              r3_envolvente_red.json
+
+ resultados/*.csv
+   │
+   ▼
+ graficas.py
+   │
+   ▼
+ graficas/*.png, resultados/tablas.md
+
+ componente + lugares + matriz + envolvente
+   │
+   ▼
+ app.py (R5, Streamlit + Folium)
 ```
 
 - `config.py` reúne las rutas, la semilla (2026), el número de repeticiones (5) y el límite de tiempo (5 min).
